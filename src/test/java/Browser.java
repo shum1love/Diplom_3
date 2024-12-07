@@ -2,12 +2,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 public class Browser {
-    /*
-    Переменные окружения, прописанные в системе:
-    WEBDRIVERS - путь к папке с драйверами для браузеров
-    YANDEX_BROWSER_DRIVER_FILENAME - имя файла драйвера Яндекс браузера (Хромдрайвера нужной версии)
-    YANDEX_BROWSER_PATH - путь к исполняемому файлу Яндекс браузера в системе
-     */
 
     public static WebDriver createWebDriver() {
         String browser = System.getProperty("browser");
@@ -30,11 +24,9 @@ public class Browser {
     }
 
     private static WebDriver createYandexDriver() {
-        System.setProperty("webdriver.chrome.driver",
-                String.format("%s/%s", System.getenv("WEBDRIVERS"),
-                        System.getenv("YANDEX_BROWSER_DRIVER_FILENAME")));
+        System.setProperty("webdriver.chrome.driver", "C:\\tools\\chromedriveryandex");
         ChromeOptions options = new ChromeOptions();
-        options.setBinary(System.getenv("YANDEX_BROWSER_PATH"));
+        options.setBinary(System.getenv("C:\\Users\\rodio\\AppData\\Local\\Yandex\\YandexBrowser\\Application"));
         return new ChromeDriver(options);
     }
 }
