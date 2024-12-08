@@ -24,7 +24,7 @@ public class Browser {
     }
 
     private static WebDriver createYandexDriver() {
-        System.setProperty("webdriver.chrome.driver", "C:\\tools\\chromedriveryandex");
+        System.setProperty("webdriver.chrome.driver", "C:\\tools\\chromedriver");
         ChromeOptions options = new ChromeOptions();
         options.setBinary(System.getenv("C:\\Users\\rodio\\AppData\\Local\\Yandex\\YandexBrowser\\Application"));
         return new ChromeDriver(options);

@@ -1,16 +1,22 @@
 import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
+import io.restassured.response.Response;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import pageObject.RegistrationPage;
 
+import static io.restassured.RestAssured.given;
 import static org.junit.Assert.assertEquals;
 public class TestRegistration {
     private WebDriver driver;
+    ApiLogin apiLogin = new ApiLogin();
+    private String token;
     private RegistrationPage registrationPage;
-
+    private String name = "Bogdan";
+    String email = "bogdan.example94@yandex.ru";
+    String password = "Bogdan123";
     @Before
     public void setUp() {
         // Создаем WebDriver через класс Browser
@@ -24,32 +30,26 @@ public class TestRegistration {
     @DisplayName("Успешная регистрация пользователя")
     @Description("Проверка успешной регистрации нового пользователя с корректными данными")
     public void testSuccessfulRegistration() {
-        //registrationPage.setName("Тест Пользователь");
-        //registrationPage.setEmail("test@example.com");
-        //registrationPage.setPassword("123456");
-        //registrationPage.clickRegisterButton();
-
-        String expectedUrl = "https://stellarburgers.nomoreparties.site/";
-        assertEquals("URL после успешной регистрации не соответствует ожидаемому", expectedUrl, driver.getCurrentUrl());
+        registrationPage.clickPersonalAccount();
+        registrationPage.clickButtonRegistration();
+        registrationPage.clickFieldNameReg();
+        registrationPage.setFieldNameReg(name);
+        registrationPage.clickEmailfield();
+        registrationPage.setEmail(email);
+        registrationPage.clickPasswordfield();
+        registrationPage.setPassword(password);
+        registrationPage.clickButtonRegistrationReg();
+        token = apiLogin.apiLogin(email, password);
     }
-
-    @Test
-    @DisplayName("Ошибка при некорректном пароле")
-    @Description("Проверка отображения ошибки при вводе пароля длиной менее 6 символов")
-    public void testInvalidPasswordError() {
-        //registrationPage.setName("Тест Пользователь");
-        //registrationPage.setEmail("test@example.com");
-        //registrationPage.setPassword("12345"); // Некорректный пароль
-        //registrationPage.clickRegisterButton();
-
-        //String expectedError = "Некорректный пароль";
-        //assertEquals("Сообщение об ошибке не соответствует ожидаемому", expectedError, registrationPage.getErrorMessage());
-    }
-
     @After
-    public void tearDown() {
-        if (driver != null) {
-            driver.quit();
+    public void deleteUser() {
+        if (token != null) {
+            given()
+                    .header("Authorization", token)
+                    .when()
+                    .delete("https://stellarburgers.nomoreparties.site/api/auth/user");
         }
     }
+
+
 }
