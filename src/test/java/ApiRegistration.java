@@ -11,7 +11,6 @@ public class ApiRegistration {
         Response response = given()
                 .header("Content-Type", "application/json")
                 .body(user)
-                .when()
                 .post("https://stellarburgers.nomoreparties.site/api/auth/register");
 
         // Проверяем, что статус-код равен 200

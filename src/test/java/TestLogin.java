@@ -5,7 +5,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import pageObject.RegistrationPage;
-
 import static io.restassured.RestAssured.given;
 import static org.junit.Assert.assertEquals;
 
@@ -15,9 +14,8 @@ public class TestLogin {
     private String token;
     private RegistrationPage registrationPage;
     private String name = "Bogdan";
-    String email = "bogdan.example98@yandex.ru";
+    String email = "bogdan.example100@yandex.ru";
     String password = "Bogdan123";
-    String wrongPassword = "12345";
 
     @Before
     public void setUp() {
@@ -30,16 +28,11 @@ public class TestLogin {
 
     @Test
     @DisplayName("Тест 1: вход по кнопке 'Войти в аккаунт' на главной")
-    @Description("Создание пользователя чероез API, стандартный вход. Проверка видимости элемента Оформить заказ на главной странице для авторизированных пользователей")
+    @Description("Создание пользователя через API, стандартный вход. Проверка видимости элемента Оформить заказ на главной странице для авторизированных пользователей")
     public void testLoginMainPage() {
         token = apiRegistration.apiRegistration(email, password, name);
         registrationPage.clickButtonLoginAccount();
-        registrationPage.clickFieldEmailLogin();
-        registrationPage.setFieldEmailLogin(email);
-        registrationPage.clickFieldPasswordLogin();
-        registrationPage.setFieldPasswordLogin(password);
-        registrationPage.clickButtonLoginLogin();
-        registrationPage.waitButtonPlaceOrder();
+        registrationPage.loginStepShort(email, password);
         assertEquals(registrationPage.enabledButtonPlaceOrder(), true);
     }
     @Test
@@ -48,59 +41,45 @@ public class TestLogin {
     public void testLoginPersonalAccount(){
         token = apiRegistration.apiRegistration(email, password, name);
         registrationPage.clickPersonalAccount();
-        registrationPage.clickFieldEmailLogin();
-        registrationPage.setFieldEmailLogin(email);
-        registrationPage.clickFieldPasswordLogin();
-        registrationPage.setFieldPasswordLogin(password);
-        registrationPage.clickButtonLoginLogin();
-        registrationPage.waitButtonPlaceOrder();
+        registrationPage.loginStepShort(email, password);
         assertEquals(registrationPage.enabledButtonPlaceOrder(), true);
     }
     @Test
     @DisplayName("Тест 3: вход через кнопку в форме регистрации")
-    @Description("Создание пользователя чероез API, стандартный вход. Проверка видимости элемента Оформить заказ на главной странице для авторизированных пользователей")
+    @Description("Создание пользователя через API, стандартный вход. Проверка видимости элемента Оформить заказ на главной странице для авторизированных пользователей")
     public void testLoginRegistrationForm(){
         token = apiRegistration.apiRegistration(email, password, name);
         registrationPage.clickPersonalAccount();
         registrationPage.clickButtonRegistration();
         registrationPage.clickButtonLoginReg();
-        registrationPage.clickFieldEmailLogin();
-        registrationPage.setFieldEmailLogin(email);
-        registrationPage.clickFieldPasswordLogin();
-        registrationPage.setFieldPasswordLogin(password);
-        registrationPage.clickButtonLoginLogin();
-        registrationPage.waitButtonPlaceOrder();
+        registrationPage.loginStepShort(email, password);
         assertEquals(registrationPage.enabledButtonPlaceOrder(), true);
     }
     @Test
     @DisplayName("Тест 4: вход через кнопку в форме восстановления пароля")
-    @Description("Создание пользователя чероез API, стандартный вход. Проверка видимости элемента Оформить заказ на главной странице для авторизированных пользователей")
+    @Description("Создание пользователя через API, стандартный вход. Проверка видимости элемента Оформить заказ на главной странице для авторизированных пользователей")
     public void testLoginRecoverPasswordForm(){
         token = apiRegistration.apiRegistration(email, password, name);
         registrationPage.clickPersonalAccount();
         registrationPage.clickButtonRecoveryPassword();
         registrationPage.clickButtonLoginRecoveryPassword();
-        registrationPage.clickFieldEmailLogin();
-        registrationPage.setFieldEmailLogin(email);
-        registrationPage.clickFieldPasswordLogin();
-        registrationPage.setFieldPasswordLogin(password);
-        registrationPage.clickButtonLoginLogin();
-        registrationPage.waitButtonPlaceOrder();
+        registrationPage.loginStepShort(email, password);
         assertEquals(registrationPage.enabledButtonPlaceOrder(), true);
     }
 
     @After
-    public void deleteUser() {
+    public void tearDown() {
+        // Удаление пользователя
         if (token != null) {
             given()
                     .header("Authorization", token)
                     .when()
                     .delete("https://stellarburgers.nomoreparties.site/api/auth/user");
         }
-    }
-    public void tearDown() {
-        if (driver != null) {  // Проверяем, что драйвер не равен null
-            driver.quit();     // Закрываем все окна браузера
+        // Закрытие драйвера
+        if (driver != null) {
+            driver.quit();
         }
     }
+
 }
