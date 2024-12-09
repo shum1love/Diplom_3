@@ -15,10 +15,10 @@ public class RegistrationPage {
     private WebDriverWait wait;
     // нопка Войти в аккаунт на главной странице
     private By  buttonLoginAccount = By.xpath(".//button[contains(text(), 'Войти в аккаунт')]");
-    // W
+    // Кнопка Офрмить заказ на главной страницы. Видно только авторизированному пользователю
     private By buttonPlaceOrder = By.xpath(".//button[contains(text(), 'Оформить заказ')]");
 
-    // нопка личный кабинет
+    // Кнопка личный кабинет
     private By  buttonPersonalAccount = By.xpath(".//p[contains(text(), 'Личный Кабинет')]");
 
     // Окно Авторизции
@@ -26,10 +26,17 @@ public class RegistrationPage {
     private By fieldEmailLogin = By.xpath(".//label[contains(text(), 'Email')]/following-sibling::input");
     // Поле ввода password в окне авторизации
     private By fieldPasswordLogin = By.xpath(".//label[contains(text(), 'Пароль')]/following-sibling::input");
-    // нопка регистрации в окне авторизации
+    // Кнопка регистрации в окне авторизации
     private By  buttonRegistration = By.className("Auth_link__1fOlj");
-    // нопка регистрации в окне авторизации
+    // Кнопка зарегистрироваться в окне авторизации
     private By  buttonLoginLogin = By.xpath(".//button[contains(text(), 'Войти')]");
+    // Кнопка Восстановить пароль в окне авторизации
+    private By buttonRecoverPassword = By.xpath(".//a[text()='Восстановить пароль']");
+
+
+    // Окно Восстановление пароля
+    // Кнопка Войти в окне Восстановление пароля
+    private By buttonLoginRecoveryPassword = By.xpath(".//a[text()='Войти']");
 
 
     // Окно Регистрации
@@ -39,9 +46,11 @@ public class RegistrationPage {
     private By  fieldEmailReg = By.xpath(".//label[contains(text(), 'Email')]/following-sibling::input");
     // Поле ввода пароля в окне Регистрации
     private By  fieldPasswordReg = By.xpath(".//label[contains(text(), 'Пароль')]/following-sibling::input");
-    // нопка регистрации в в окне Регистрации
+    // Кнопка регистрации в в окне Регистрации
     private By  buttonRegistrationReg = By.xpath(".//button[contains(text(), 'Зарегистрироваться')]");
-    // текст некорректный пароль в в окне Регистрации
+    // Кнопка Войти в в окне Регистрации
+    private By buttonLoginReg = By.xpath(".//a[text()='Войти']");
+    // Текст некорректный пароль в в окне Регистрации
     private By  textWrongPassword = By.xpath(".//p[contains(text(), 'Некорректный пароль')]");
 
 
@@ -54,9 +63,14 @@ public class RegistrationPage {
     public void clickButtonLoginAccount(){
         driver.findElement(buttonLoginAccount).click();
     }
+    @Step
+    public void waitButtonPlaceOrder(){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement placeOrderButton = wait.until(ExpectedConditions.visibilityOfElementLocated(buttonPlaceOrder));
+    }
     @Step("Видимость кнопки Оформить заказ на главной странице сайта")
-    public void enabledButtonPlaceOrder(){
-        driver.findElement(buttonPlaceOrder).isEnabled();
+    public boolean enabledButtonPlaceOrder(){
+         return driver.findElement(buttonPlaceOrder).isDisplayed();
     }
 
     @Step("Клик по полю Email в окне авторизации")
@@ -87,6 +101,17 @@ public class RegistrationPage {
     public void clickButtonRegistration(){
         driver.findElement(buttonRegistration).click();
     }
+    @Step("Клик по кнопке восстановление пароля в окне авторизации")
+    public void clickButtonRecoveryPassword(){
+        driver.findElement(buttonRecoverPassword).click();
+    }
+
+    // Окно Восстановлеине пароля
+    @Step("Клик по кнопке Войти в окне Восстановление пароля")
+    public void clickButtonLoginRecoveryPassword(){
+        driver.findElement(buttonLoginRecoveryPassword).click();
+    }
+
 
     // Окно регистрации
     @Step( "Клик по полю Имя в окне регистрации")
@@ -117,12 +142,16 @@ public class RegistrationPage {
     public void setPassword(String password){
         driver.findElement(fieldPasswordReg).sendKeys(password);
     }
-    @Step("")
+    @Step("Клик по кнопке Зарегистрироваться в окне регистрации")
     public void clickButtonRegistrationReg(){
         driver.findElement(buttonRegistrationReg).click();
     }
-    @Step
+    @Step("Проверка на отображение текста ошибки при неверно набранном пароле")
     public boolean visibleTextwrongPassword(){
         return driver.findElement(textWrongPassword).isDisplayed();
+    }
+    @Step
+    public void clickButtonLoginReg(){
+        driver.findElement(buttonLoginReg).click();
     }
 }

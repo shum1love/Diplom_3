@@ -7,6 +7,7 @@ import org.openqa.selenium.WebDriver;
 import pageObject.RegistrationPage;
 
 import static io.restassured.RestAssured.given;
+import static org.junit.Assert.assertEquals;
 
 public class TestLogin {
     private WebDriver driver;
@@ -28,8 +29,8 @@ public class TestLogin {
     }
 
     @Test
-    @DisplayName("Успешная регистрация пользователя")
-    @Description("Проверка успешной регистрации нового пользователя с корректными данными")
+    @DisplayName("Тест 1: вход по кнопке 'Войти в аккаунт' на главной")
+    @Description("Создание пользователя чероез API, стандартный вход. Проверка видимости элемента Оформить заказ на главной странице для авторизированных пользователей")
     public void testLoginMainPage() {
         token = apiRegistration.apiRegistration(email, password, name);
         registrationPage.clickButtonLoginAccount();
@@ -38,7 +39,54 @@ public class TestLogin {
         registrationPage.clickFieldPasswordLogin();
         registrationPage.setFieldPasswordLogin(password);
         registrationPage.clickButtonLoginLogin();
-        registrationPage.enabledButtonPlaceOrder();
+        registrationPage.waitButtonPlaceOrder();
+        assertEquals(registrationPage.enabledButtonPlaceOrder(), true);
+    }
+    @Test
+    @DisplayName("Тест 2: вход через кнопку 'Личный кабинет'")
+    @Description("Создание пользователя чероез API, стандартный вход. Проверка видимости элемента Оформить заказ на главной странице для авторизированных пользователей")
+    public void testLoginPersonalAccount(){
+        token = apiRegistration.apiRegistration(email, password, name);
+        registrationPage.clickPersonalAccount();
+        registrationPage.clickFieldEmailLogin();
+        registrationPage.setFieldEmailLogin(email);
+        registrationPage.clickFieldPasswordLogin();
+        registrationPage.setFieldPasswordLogin(password);
+        registrationPage.clickButtonLoginLogin();
+        registrationPage.waitButtonPlaceOrder();
+        assertEquals(registrationPage.enabledButtonPlaceOrder(), true);
+    }
+    @Test
+    @DisplayName("Тест 3: вход через кнопку в форме регистрации")
+    @Description("Создание пользователя чероез API, стандартный вход. Проверка видимости элемента Оформить заказ на главной странице для авторизированных пользователей")
+    public void testLoginRegistrationForm(){
+        token = apiRegistration.apiRegistration(email, password, name);
+        registrationPage.clickPersonalAccount();
+        registrationPage.clickButtonRegistration();
+        registrationPage.clickButtonLoginReg();
+        registrationPage.clickFieldEmailLogin();
+        registrationPage.setFieldEmailLogin(email);
+        registrationPage.clickFieldPasswordLogin();
+        registrationPage.setFieldPasswordLogin(password);
+        registrationPage.clickButtonLoginLogin();
+        registrationPage.waitButtonPlaceOrder();
+        assertEquals(registrationPage.enabledButtonPlaceOrder(), true);
+    }
+    @Test
+    @DisplayName("Тест 4: вход через кнопку в форме восстановления пароля")
+    @Description("Создание пользователя чероез API, стандартный вход. Проверка видимости элемента Оформить заказ на главной странице для авторизированных пользователей")
+    public void testLoginRecoverPasswordForm(){
+        token = apiRegistration.apiRegistration(email, password, name);
+        registrationPage.clickPersonalAccount();
+        registrationPage.clickButtonRecoveryPassword();
+        registrationPage.clickButtonLoginRecoveryPassword();
+        registrationPage.clickFieldEmailLogin();
+        registrationPage.setFieldEmailLogin(email);
+        registrationPage.clickFieldPasswordLogin();
+        registrationPage.setFieldPasswordLogin(password);
+        registrationPage.clickButtonLoginLogin();
+        registrationPage.waitButtonPlaceOrder();
+        assertEquals(registrationPage.enabledButtonPlaceOrder(), true);
     }
 
     @After

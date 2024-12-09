@@ -1,6 +1,6 @@
 import org.junit.Test;
 
-public class Testiksapi {
+public class DemoTestApi {
     ApiRegistration apiRegistration = new ApiRegistration();
     @Test
     public void supertest(){
