@@ -1,6 +1,5 @@
 import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
-import io.restassured.response.Response;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,8 +14,9 @@ public class TestRegistration {
     private String token;
     private RegistrationPage registrationPage;
     private String name = "Bogdan";
-    String email = "bogdan.example94@yandex.ru";
+    String email = "bogdan.example95@yandex.ru";
     String password = "Bogdan123";
+    String wrongPassword = "12345";
     @Before
     public void setUp() {
         // Создаем WebDriver через класс Browser
@@ -40,6 +40,23 @@ public class TestRegistration {
         registrationPage.setPassword(password);
         registrationPage.clickButtonRegistrationReg();
         token = apiLogin.apiLogin(email, password);
+    }
+    @Test
+    @DisplayName("Проверка регистрации с паролем меньше допустимого")
+    @Description("5 символов")
+    public void testWrongPasswordRegistration(){
+        registrationPage.clickPersonalAccount();
+        registrationPage.clickButtonRegistration();
+        registrationPage.clickFieldNameReg();
+        registrationPage.setFieldNameReg(name);
+        registrationPage.clickEmailfield();
+        registrationPage.setEmail(email);
+        registrationPage.clickPasswordfield();
+        registrationPage.setPassword(wrongPassword);
+        registrationPage.clickButtonRegistrationReg();
+        token = apiLogin.apiLogin(email, wrongPassword);
+        assertEquals(registrationPage.visibleTextwrongPassword(), true);
+        assertEquals(token, null);
     }
     @After
     public void deleteUser() {

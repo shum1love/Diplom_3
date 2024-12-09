@@ -13,16 +13,22 @@ import java.util.Random;
 public class RegistrationPage {
     private WebDriver driver;
     private WebDriverWait wait;
+    // нопка Войти в аккаунт на главной странице
+    private By  buttonLoginAccount = By.xpath(".//button[contains(text(), 'Войти в аккаунт')]");
 
     // нопка личный кабинет
     private By  buttonPersonalAccount = By.xpath(".//p[contains(text(), 'Личный Кабинет')]");
+
     // Окно Авторизции
     // Поле ввода email в окне авторизации
-    private By fieldEmailLogin = By.name("name");
+    private By fieldEmailLogin = By.xpath(".//label[contains(text(), 'Email')]/following-sibling::input");
     // Поле ввода password в окне авторизации
-    private By fieldPasswordLogin = By.name("Пароль");
+    private By fieldPasswordLogin = By.xpath(".//label[contains(text(), 'Пароль')]/following-sibling::input");
     // нопка регистрации в окне авторизации
     private By  buttonRegistration = By.className("Auth_link__1fOlj");
+    // нопка регистрации в окне авторизации
+    private By  buttonLoginLogin = By.xpath(".//button[contains(text(), 'Войти')]");
+
 
     // Окно Регистрации
     // Поле ввода имени в окне Регистрации
@@ -33,20 +39,50 @@ public class RegistrationPage {
     private By  fieldPasswordReg = By.xpath(".//label[contains(text(), 'Пароль')]/following-sibling::input");
     // нопка регистрации в в окне Регистрации
     private By  buttonRegistrationReg = By.xpath(".//button[contains(text(), 'Зарегистрироваться')]");
+    // текст некорректный пароль в в окне Регистрации
+    private By  textWrongPassword = By.xpath(".//p[contains(text(), 'Некорректный пароль')]");
+
 
     // Коструктор. Шаг. Совершает регистрацию
     public RegistrationPage(WebDriver driver){
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(30)); // Создаем объект WebDriverWait с таймаутом 10 сек
     }
-    @Step("Клик по кнопке личный кабинет")
+    @Step("Клик по кнопке войти в аккаунт на главной странице сайта")
+    public void clickButtonLoginAccount(){
+        driver.findElement(buttonLoginAccount).click();
+    }
+
+    @Step("Клик по полю Email в окне авторизации")
+    public void clickFieldEmailLogin(){
+        driver.findElement(fieldEmailLogin).click();
+    }
+    @Step("Ввод текста в поле Email в окне авторизации")
+    public void setFieldEmailLogin(String email){
+        driver.findElement(fieldEmailLogin).sendKeys(email);
+    }
+    @Step("Клик по полю Пароль в окне Авторизации")
+    public void clickFieldPasswordLogin(){
+        driver.findElement(fieldPasswordLogin).click();
+    }
+    @Step("Ввод тектса в поле пароль в окне Авторизации")
+    public void setFieldPasswordLogin(String password){
+        driver.findElement(fieldPasswordLogin).sendKeys(password);
+    }
+    @Step("Клик по кнопке личный кабинет в шапке сайта")
     public void clickPersonalAccount(){
         driver.findElement(buttonPersonalAccount).click();
+    }
+    @Step("Клик по кнопке Войти в окне авторизации")
+    public void clickButtonLoginLogin(){
+        driver.findElement(buttonLoginLogin).click();
     }
     @Step("Клик по кнопке зарегистрироваться в окне авторизации")
     public void clickButtonRegistration(){
         driver.findElement(buttonRegistration).click();
     }
+
+    // Окно регистрации
     @Step( "Клик по полю Имя в окне регистрации")
     public void clickFieldNameReg(){
         driver.findElement(fieldNameReg).click();
@@ -78,5 +114,9 @@ public class RegistrationPage {
     @Step("")
     public void clickButtonRegistrationReg(){
         driver.findElement(buttonRegistrationReg).click();
+    }
+    @Step
+    public boolean visibleTextwrongPassword(){
+        return driver.findElement(textWrongPassword).isDisplayed();
     }
 }

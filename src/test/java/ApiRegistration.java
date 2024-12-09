@@ -1,11 +1,10 @@
 import static io.restassured.RestAssured.*;
 import io.restassured.response.Response;
-
-public class ApiLogin {
+public class ApiRegistration {
     private String refreshToken; // Поле для сохранения refreshToken
 
-    public String apiLogin(String email, String password) {
-        User user = new User(email, password);
+    public String apiRegistration(String email, String password, String name) {
+        User user = new User(email, password, name);
 
         // Выполняем POST запрос и извлекаем ответ
         Response response = given()
@@ -19,7 +18,7 @@ public class ApiLogin {
         return refreshToken; // Возвращаем refreshToken
     }
 
-     public String getRefreshToken() {
+    public String getRefreshToken() {
         return refreshToken; // Геттер для доступа к refreshToken
     }
 }
