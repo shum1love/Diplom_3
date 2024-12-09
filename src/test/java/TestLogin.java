@@ -14,7 +14,7 @@ public class TestLogin {
     private String token;
     private RegistrationPage registrationPage;
     private String name = "Bogdan";
-    String email = "bogdan.example95@yandex.ru";
+    String email = "bogdan.example98@yandex.ru";
     String password = "Bogdan123";
     String wrongPassword = "12345";
 
@@ -38,7 +38,7 @@ public class TestLogin {
         registrationPage.clickFieldPasswordLogin();
         registrationPage.setFieldPasswordLogin(password);
         registrationPage.clickButtonLoginLogin();
-
+        registrationPage.enabledButtonPlaceOrder();
     }
 
     @After
@@ -48,6 +48,11 @@ public class TestLogin {
                     .header("Authorization", token)
                     .when()
                     .delete("https://stellarburgers.nomoreparties.site/api/auth/user");
+        }
+    }
+    public void tearDown() {
+        if (driver != null) {  // Проверяем, что драйвер не равен null
+            driver.quit();     // Закрываем все окна браузера
         }
     }
 }

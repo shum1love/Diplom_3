@@ -67,6 +67,10 @@ public class TestRegistration {
                     .delete("https://stellarburgers.nomoreparties.site/api/auth/user");
         }
     }
-
+    public void tearDown() {
+        if (driver != null) {  // Проверяем, что драйвер не равен null
+            driver.quit();     // Закрываем все окна браузера
+        }
+    }
 
 }

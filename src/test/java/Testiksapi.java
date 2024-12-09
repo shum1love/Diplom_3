@@ -1,9 +1,9 @@
 import org.junit.Test;
 
 public class Testiksapi {
-    ApiLogin apiLogin = new ApiLogin();
+    ApiRegistration apiRegistration = new ApiRegistration();
     @Test
     public void supertest(){
-        apiLogin.apiLogin("bogdan.example62@yandex.ru", "12345");
+        apiRegistration.apiRegistration("bogdan.example63@yandex.ru", "12345", "Bodya");
     }
 }

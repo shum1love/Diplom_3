@@ -1,5 +1,6 @@
 import static io.restassured.RestAssured.*;
 import io.restassured.response.Response;
+
 public class ApiRegistration {
     private String refreshToken; // Поле для сохранения refreshToken
 
@@ -11,7 +12,10 @@ public class ApiRegistration {
                 .header("Content-Type", "application/json")
                 .body(user)
                 .when()
-                .post("https://stellarburgers.nomoreparties.site/api/auth/login");
+                .post("https://stellarburgers.nomoreparties.site/api/auth/register");
+
+        // Проверяем, что статус-код равен 200
+        response.then().statusCode(200);
 
         // Извлекаем refreshToken из ответа
         refreshToken = response.jsonPath().getString("accessToken"); // Сохраняем refreshToken

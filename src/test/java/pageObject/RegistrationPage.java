@@ -15,6 +15,8 @@ public class RegistrationPage {
     private WebDriverWait wait;
     // нопка Войти в аккаунт на главной странице
     private By  buttonLoginAccount = By.xpath(".//button[contains(text(), 'Войти в аккаунт')]");
+    // W
+    private By buttonPlaceOrder = By.xpath(".//button[contains(text(), 'Оформить заказ')]");
 
     // нопка личный кабинет
     private By  buttonPersonalAccount = By.xpath(".//p[contains(text(), 'Личный Кабинет')]");
@@ -51,6 +53,10 @@ public class RegistrationPage {
     @Step("Клик по кнопке войти в аккаунт на главной странице сайта")
     public void clickButtonLoginAccount(){
         driver.findElement(buttonLoginAccount).click();
+    }
+    @Step("Видимость кнопки Оформить заказ на главной странице сайта")
+    public void enabledButtonPlaceOrder(){
+        driver.findElement(buttonPlaceOrder).isEnabled();
     }
 
     @Step("Клик по полю Email в окне авторизации")
