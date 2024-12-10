@@ -4,19 +4,25 @@ import org.openqa.selenium.chrome.ChromeOptions;
 
 public class Browser {
 
+    /*
+    Переменные окружения, прописанные в системе:
+    WEBDRIVERS - путь к папке с драйверами для браузеров
+    YANDEX_BROWSER_DRIVER_FILENAME - имя файла драйвера Яндекс браузера (Хромдрайвера нужной версии)
+    YANDEX_BROWSER_PATH - путь к исполняемому файлу Яндекс браузера в системе
+     */
+
     public static WebDriver createWebDriver() {
         String browser = System.getProperty("browser");
-        if (browser == null || browser.isEmpty()) {
-            throw new IllegalArgumentException("Не указан браузер! Передайте параметр -Dbrowser=<chrome|yandex>");
+        if (browser == null) {
+            return createChromeDriver();
         }
 
-        switch (browser.toLowerCase()) {
+        switch (browser) {
             case "yandex":
                 return createYandexDriver();
             case "chrome":
-                return createChromeDriver();
             default:
-                throw new IllegalArgumentException("Неподдерживаемый браузер: " + browser);
+                return createChromeDriver();
         }
     }
 
@@ -26,10 +32,11 @@ public class Browser {
     }
 
     private static WebDriver createYandexDriver() {
-        // Убедитесь, что пути к драйверу и бинарнику корректны
-        System.setProperty("webdriver.chrome.driver", "C:\\tools\\chromedriveryandex\\chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver",
+                String.format("%s/%s", System.getenv("WEBDRIVERS"),
+                        System.getenv("YANDEX_BROWSER_DRIVER_FILENAME")));
         ChromeOptions options = new ChromeOptions();
-        options.setBinary("C:\\Users\\Rodion\\AppData\\Local\\Yandex\\YandexBrowser\\Application\\browser.exe");
+        options.setBinary(System.getenv("YANDEX_BROWSER_PATH"));
         return new ChromeDriver(options);
     }
 }
@@ -37,8 +44,8 @@ public class Browser {
 Пример запуска:
 
 Для Chrome:
-mvn test -Dbrowser=chrome
+mvn clean test -Dbrowser=chrome
 
 Для Yandex Browser:
-mvn test -Dbrowser=yandex
+mvn clean test -Dbrowser=yandex
 */
