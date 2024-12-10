@@ -11,57 +11,62 @@ import java.time.Duration;
 import static org.openqa.selenium.By.*;
 
 public class RegistrationPage {
-    private WebDriver driver;
-    private WebDriverWait wait;
+    private final WebDriver driver;
+    private final WebDriverWait wait;
+
+    public RegistrationPage(WebDriver driver) {
+        this.driver = driver;
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+    }
 
     // Кнопка Конструктор в шапке сайта
-    private By buttonConstructor = xpath(".//p[contains(text(), 'Конструктор')]");
+    private final By buttonConstructor = xpath(".//p[contains(text(), 'Конструктор')]");
     // Логотип Stellar Burger в шапке сайта
-    private By logoStellarBurger = xpath(".//div[@class='AppHeader_header__logo__2D0X2']");
+    private final By logoStellarBurger = xpath(".//div[@class='AppHeader_header__logo__2D0X2']");
 
     // Кнопка Войти в аккаунт на главной странице
-    private By buttonLoginAccount = xpath(".//button[contains(text(), 'Войти в аккаунт')]");
+    private final By buttonLoginAccount = xpath(".//button[contains(text(), 'Войти в аккаунт')]");
     // Кнопка Оформить заказ на главной страницы. Видно только авторизированному пользователю
-    private By buttonPlaceOrder = xpath(".//button[contains(text(), 'Оформить заказ')]");
+    private final By buttonPlaceOrder = xpath(".//button[contains(text(), 'Оформить заказ')]");
 
     // Кнопка личный кабинет
-    private By buttonPersonalAccount = xpath(".//p[contains(text(), 'Личный Кабинет')]");
+    private final By buttonPersonalAccount = xpath(".//p[contains(text(), 'Личный Кабинет')]");
 
     // Окно Авторизции
     // Поле ввода email в окне авторизации
-    private By fieldEmailLogin = xpath(".//label[contains(text(), 'Email')]/following-sibling::input");
+    private final By fieldEmailLogin = xpath(".//label[contains(text(), 'Email')]/following-sibling::input");
     // Поле ввода password в окне авторизации
-    private By fieldPasswordLogin = xpath(".//label[contains(text(), 'Пароль')]/following-sibling::input");
+    private final By fieldPasswordLogin = xpath(".//label[contains(text(), 'Пароль')]/following-sibling::input");
     // Кнопка регистрации в окне авторизации
-    private By buttonRegistration = className("Auth_link__1fOlj");
+    private final By buttonRegistration = className("Auth_link__1fOlj");
     // Кнопка зарегистрироваться в окне авторизации
-    private By buttonLoginLogin = xpath(".//button[contains(text(), 'Войти')]");
+    private final By buttonLoginLogin = xpath(".//button[contains(text(), 'Войти')]");
     // Кнопка Восстановить пароль в окне авторизации
-    private By buttonRecoverPassword = xpath(".//a[text()='Восстановить пароль']");
+    private final By buttonRecoverPassword = xpath(".//a[text()='Восстановить пароль']");
 
 
     // Окно Восстановление пароля
     // Кнопка Войти в окне Восстановление пароля
-    private By buttonLoginRecoveryPassword = xpath(".//a[text()='Войти']");
+    private final By buttonLoginRecoveryPassword = xpath(".//a[text()='Войти']");
 
 
     // Окно Регистрации
     // Поле ввода имени в окне Регистрации
-    private By fieldNameReg = xpath(".//label[contains(text(), 'Имя')]/following-sibling::input");
+    private final By fieldNameReg = xpath(".//label[contains(text(), 'Имя')]/following-sibling::input");
     // Поле ввода емейла в окне Регистрации
-    private By fieldEmailReg = xpath(".//label[contains(text(), 'Email')]/following-sibling::input");
+    private final By fieldEmailReg = xpath(".//label[contains(text(), 'Email')]/following-sibling::input");
     // Поле ввода пароля в окне Регистрации
-    private By fieldPasswordReg = xpath(".//label[contains(text(), 'Пароль')]/following-sibling::input");
+    private final By fieldPasswordReg = xpath(".//label[contains(text(), 'Пароль')]/following-sibling::input");
     // Кнопка регистрации в в окне Регистрации
-    private By buttonRegistrationReg = xpath(".//button[contains(text(), 'Зарегистрироваться')]");
+    private final By buttonRegistrationReg = xpath(".//button[contains(text(), 'Зарегистрироваться')]");
     // Кнопка Войти в в окне Регистрации
-    private By buttonLoginReg = xpath(".//a[text()='Войти']");
+    private final By buttonLoginReg = xpath(".//a[text()='Войти']");
     // Текст некорректный пароль в в окне Регистрации
-    private By textWrongPassword = xpath(".//p[contains(text(), 'Некорректный пароль')]");
+    private final By textWrongPassword = xpath(".//p[contains(text(), 'Некорректный пароль')]");
 
     //ЛК
     // Кнопка Выйти в ЛК
-    private By buttonLogOut = xpath(".//button[contains(text(), 'Выйти']");
+    private final By buttonLogOut = xpath(".//button[contains(text(), 'Выйти']");
 
     //Конструктор Бургера разделы
     // Вкладка Булки
@@ -71,12 +76,6 @@ public class RegistrationPage {
     // Вкладка Начинки
     public By buttonConstructorFillings = xpath(".//span[contains(text(), 'Начинки')]/..");
 
-
-    // Коструктор. Шаг. Совершает регистрацию
-    public RegistrationPage(WebDriver driver) {
-        this.driver = driver;
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(30)); // Создаем объект WebDriverWait с таймаутом 10 сек
-    }
 
     @Step("Клик по кнопке войти в аккаунт на главной странице сайта")
     public void clickButtonLoginAccount() {
@@ -88,8 +87,7 @@ public class RegistrationPage {
     }
     @Step("Ожидание, что кнопка оформить заказ станет видимой")
     public void waitButtonPlaceOrder() {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        WebElement placeOrderButton = wait.until(ExpectedConditions.visibilityOfElementLocated(buttonPlaceOrder));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(buttonPlaceOrder));
     }
 
     @Step("Видимость кнопки Оформить заказ на главной странице сайта")
@@ -112,7 +110,7 @@ public class RegistrationPage {
         driver.findElement(fieldPasswordLogin).click();
     }
 
-    @Step("Ввод тектса в поле пароль в окне Авторизации")
+    @Step("Ввод текста в поле пароль в окне Авторизации")
     public void setFieldPasswordLogin(String password) {
         driver.findElement(fieldPasswordLogin).sendKeys(password);
     }
@@ -161,7 +159,7 @@ public class RegistrationPage {
     }
 
     @Step("Клик по полю Email")
-    public void clickEmailfield() {
+    public void clickEmailField() {
         driver.findElement(fieldEmailReg).click();
     }
 
@@ -171,7 +169,7 @@ public class RegistrationPage {
     }
 
     @Step("Клик по полю Password")
-    public void clickPasswordfield() {
+    public void clickPasswordField() {
         driver.findElement(fieldPasswordReg).click();
     }
 
@@ -186,7 +184,7 @@ public class RegistrationPage {
     }
 
     @Step("Проверка на отображение текста ошибки при неверно набранном пароле")
-    public boolean visibleTextwrongPassword() {
+    public boolean visibleTextWrongPassword() {
         return driver.findElement(textWrongPassword).isDisplayed();
     }
 
@@ -259,9 +257,9 @@ public class RegistrationPage {
         clickButtonRegistration();
         clickFieldNameReg();
         setFieldNameReg(name);
-        clickEmailfield();
+        clickEmailField();
         setEmail(email);
-        clickPasswordfield();
+        clickPasswordField();
         setPassword(password);
         clickButtonRegistrationReg();
     }

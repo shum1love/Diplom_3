@@ -13,7 +13,7 @@ public class TestRegistration {
     private String token;
     private RegistrationPage registrationPage;
     private String name = "Bogdan";
-    String email = "bogdan.example100@yandex.ru";
+    String email = "bogdan.example103@yandex.ru";
     String password = "Bogdan123";
     String wrongPassword = "12345";
     @Before
@@ -40,7 +40,7 @@ public class TestRegistration {
     public void testWrongPasswordRegistration() {
         registrationPage.registrationStep(email, wrongPassword, name);
         token = apiLogin.apiLogin(email, wrongPassword);
-        assertEquals(registrationPage.visibleTextwrongPassword(), true);
+        assertEquals(registrationPage.visibleTextWrongPassword(), true);
         assertEquals(token, null);
     }
     @After
