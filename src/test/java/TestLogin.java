@@ -14,7 +14,7 @@ public class TestLogin {
     private String token;
     private RegistrationPage registrationPage;
     private String name = "Bogdan";
-    String email = "bogdan.example100@yandex.ru";
+    String email = "bogdan.example101@yandex.ru";
     String password = "Bogdan123";
 
     @Before
