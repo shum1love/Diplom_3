@@ -7,9 +7,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 import java.time.Duration;
-
 import static org.openqa.selenium.By.*;
 
 public class RegistrationPage {
@@ -21,9 +19,9 @@ public class RegistrationPage {
     // Логотип Stellar Burger в шапке сайта
     private By logoStellarBurger = xpath(".//div[@class='AppHeader_header__logo__2D0X2']");
 
-    // нопка Войти в аккаунт на главной странице
+    // Кнопка Войти в аккаунт на главной странице
     private By buttonLoginAccount = xpath(".//button[contains(text(), 'Войти в аккаунт')]");
-    // Кнопка Офрмить заказ на главной страницы. Видно только авторизированному пользователю
+    // Кнопка Оформить заказ на главной страницы. Видно только авторизированному пользователю
     private By buttonPlaceOrder = xpath(".//button[contains(text(), 'Оформить заказ')]");
 
     // Кнопка личный кабинет
@@ -88,7 +86,7 @@ public class RegistrationPage {
     public boolean checkButtonLoginAccount() {
         return driver.findElement(buttonLoginAccount).isDisplayed();
     }
-    @Step("Ожидание, что кнопка оформить заказ станет видимой") // Дописать
+    @Step("Ожидание, что кнопка оформить заказ станет видимой")
     public void waitButtonPlaceOrder() {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         WebElement placeOrderButton = wait.until(ExpectedConditions.visibilityOfElementLocated(buttonPlaceOrder));

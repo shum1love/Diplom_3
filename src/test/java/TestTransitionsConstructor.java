@@ -27,11 +27,8 @@ public class TestTransitionsConstructor {
         By bunsTabLocator = registrationPage.buttonConstructorBuns;
         // Получение класса элемента вкладки
         String actualClass = driver.findElement(bunsTabLocator).getAttribute("class");
-
-        // Ожидаемый класс
-        String expectedClass = "tab_tab_type_current__2BEPc";
         // Проверка изменения класса
-        assertTrue("Класс выбранной вкладки не изменился на ожидаемый",
+        assertTrue("Класс выбранной вкладки изменился на ожидаемый",
                 actualClass.contains(expectedClass));
     }
     @Test
@@ -41,11 +38,8 @@ public class TestTransitionsConstructor {
         By bunsTabLocator = registrationPage.buttonConstructorSauce;
         // Получение класса элемента вкладки
         String actualClass = driver.findElement(bunsTabLocator).getAttribute("class");
-
-        // Ожидаемый класс
-        String expectedClass = "tab_tab_type_current__2BEPc";
         // Проверка изменения класса
-        assertTrue("Класс выбранной вкладки не изменился на ожидаемый",
+        assertTrue("Класс выбранной вкладки изменился на ожидаемый",
                 actualClass.contains(expectedClass));
     }
     @Test
@@ -55,11 +49,8 @@ public class TestTransitionsConstructor {
         By bunsTabLocator = registrationPage.buttonConstructorFillings;
         // Получение класса элемента вкладки
         String actualClass = driver.findElement(bunsTabLocator).getAttribute("class");
-
-        // Ожидаемый класс
-        String expectedClass = "tab_tab_type_current__2BEPc";
         // Проверка изменения класса
-        assertTrue("Класс выбранной вкладки не изменился на ожидаемый",
+        assertTrue("Класс выбранной вкладки изменился на ожидаемый",
                 actualClass.contains(expectedClass));
     }
     @After
