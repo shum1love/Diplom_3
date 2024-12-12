@@ -1,3 +1,4 @@
+import SupportClasses.Browser;
 import io.qameta.allure.junit4.DisplayName;
 import org.junit.After;
 import org.junit.Before;
@@ -13,7 +14,7 @@ public class TestTransitionsConstructor {
     String expectedClass = "tab_tab_type_current__2BEPc";
     @Before
     public void setUp() {
-        // Создаем WebDriver через класс Browser
+        // Создаем WebDriver через класс SupportClasses.Browser
         driver = Browser.createWebDriver();
         driver.manage().window().maximize();
         driver.get("https://stellarburgers.nomoreparties.site");

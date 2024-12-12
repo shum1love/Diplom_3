@@ -1,3 +1,4 @@
+import SupportClasses.Browser;
 import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
 import org.junit.After;
@@ -11,7 +12,7 @@ public class TestTransferPersonalAccount {
     private RegistrationPage registrationPage;
     @Before
     public void setUp() {
-        // Создаем WebDriver через класс Browser
+        // Создаем WebDriver через класс SupportClasses.Browser
         driver = Browser.createWebDriver();
         driver.manage().window().maximize();
         driver.get("https://stellarburgers.nomoreparties.site");
